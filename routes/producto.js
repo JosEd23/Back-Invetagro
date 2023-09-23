@@ -1,0 +1,23 @@
+'use strict'
+
+var express = require('express');
+var productoController = require('../controllers/ProductoController');
+
+var api = express.Router();
+var auth = require('../middlewares/authenticate');
+var multiparty = require("connect-multiparty");
+var path = multiparty({uploadDir:'./uploads/productos'});
+
+//APIS para productos
+api.post('/registro_producto_admin', [auth.auth,path],productoController.registro_producto_admin);
+api.get('/listar_productos_admin/:filtro?', auth.auth, productoController.listar_productos_admin);
+api.get('/obtener_ruta/:img',productoController.obtener_portada);
+api.put('/actualiza_producto_admin/:id', [auth.auth,path], productoController.actualiza_producto_admin);
+api.delete('/eliminar_producto_admin/:id', auth.auth,productoController.eliminar_producto_admin);
+
+//APIS para inventario
+api.get('/listar_inventario_producto_admin/:id', auth.auth,productoController.listar_inventario_producto_admin);
+api.delete('/eliminar_inventario_producto_admin/:id', auth.auth,productoController.eliminar_inventario_producto_admin);
+api.post('/registro_inventario_producto_admin', auth.auth,productoController.registro_inventario_producto_admin);
+
+module.exports = api;
