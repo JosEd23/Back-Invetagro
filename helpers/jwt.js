@@ -4,13 +4,13 @@
 
 var jwt = require('jwt-simple');
 var moment = require('moment');
-var secret = 'drd85739';
+var secret = 'jose';
 
 exports.createtoken = function(user){
     var payload = {
         sub: user._id,
         nombres: user.nombres,
-        apellido: user.apellido,
+        apellidos: user.apellidos,
         correo: user.correo,
         rol: user.rol,
         iat: moment().unix(),   

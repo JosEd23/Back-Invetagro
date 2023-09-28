@@ -143,21 +143,6 @@ const registro_cliente_admin = async function(req, res){
     }
 }
 
-const eliminar_cliente_dmin = async function(req,res){
-    if(req.user){
-       if(req.user.role == 'admin'){
-        var id= req.params['id'];
-
-        let reg = await Cliente.findByIdAndRemove({id:id});
-        res.status(200).send({data:reg});
-       }else{
-        res.status(500).send({message:'Sin acceso'})
-       }
-    }else{
-        res.status(500).send({message:'Sin acceso'})
-    }
-}
-
 const obtener_cliente_admin = async function (req, res){
     if(req.user){
         if(req.user.rol == 'ADMIN'){

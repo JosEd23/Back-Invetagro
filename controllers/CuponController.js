@@ -35,7 +35,76 @@ const listar_cupones_admin = async function (req, res){
     }
 }
 
+const obtener_cupon_admin = async function (req, res){
+    if(req.user){
+        if(req.user.rol == 'ADMIN'){
+
+            var id = req.params['id'];
+            
+            try {
+                var reg = await cupon.findById({_id:id});
+                res.status(200).send({data:reg});
+                
+            } catch (error) {
+                res.status(200).send({data:undefined});
+            }
+
+
+        }else{
+            res.status(500).send({message:'No access'});
+        }
+    }else{
+        res.status(500).send({message:'No access'});
+    }
+}
+
+const actualizar_cupon_admin = async function(req, res){
+    if(req.user){
+        if(req.user.rol == 'ADMIN'){
+
+            var id = req.params['id'];
+            var data = req.body;
+
+            var reg = await cupon.findByIdAndUpdate({_id:id},{
+                codigo: data.codigo,
+                tipo: data.tipo,
+                valor: data.valor,
+                limite:data.limite,
+
+            })
+            res.status(200).send({data:reg});
+
+        }else{
+            res.status(500).send({message:'No access'});
+        }
+    }else{
+        res.status(500).send({message:'No access'});
+    }
+}
+
+const eliminar_cupon_admin = async function(req, res){
+    if(req.user){
+        if(req.user.rol == 'ADMIN'){
+
+            var id = req.params['id']
+
+            let reg=await cupon.findByIdAndRemove({_id:id});
+            res.status(200).send({data:reg});
+            
+           
+        }else{
+            res.status(500).send({message:'No access'});
+        }
+    }else{
+        res.status(500).send({message:'No access'});
+    }
+}
+
+
 module.exports = {
     registro_cupon_admin,
-    listar_cupones_admin 
+    listar_cupones_admin,
+    obtener_cupon_admin,
+    actualizar_cupon_admin,
+    eliminar_cupon_admin
 }
