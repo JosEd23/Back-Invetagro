@@ -12,10 +12,5 @@ api.get('/obtener_proveedor_admin/:id', auth.auth,proveedorController.obtener_pr
 api.put('/actualizar_proveedor_admin/:id',auth.auth,proveedorController.actualizar_proveedor_admin);
 api.delete('/eliminar_proveedor_admin/:id',auth.auth,proveedorController.eliminar_proveedor_admin);
 
-// api.get('/proveedor/:nombres?', proveedorController.listar);
-// api.post('/proveedor/registrar', proveedorController.registrar);
-// api.put('/proveedor/editar/:id', proveedorController.editar);
-// api.delete('/proveedor/eliminar/:id', proveedorController.eliminar);
-// api.get('/provedor/:id', proveedorController.obtener)
 
 module.exports = api;
