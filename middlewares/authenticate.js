@@ -21,7 +21,7 @@ exports.auth = function(req, res, next){
     }else{
         try {
             var payload = jwt.decode(token,secret);
-            console.log(payload);
+            // console.log(payload);
             //Validacion de expiracion del token
             if(payload.exp <= moment().unix()){
                 return res.status(403).send({message: 'TokenExpirado'});

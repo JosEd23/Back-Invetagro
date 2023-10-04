@@ -8,42 +8,44 @@ var path = require('path');
 
 const registro_producto_admin = async function(req, res){
     if(req.user){
-        if(req.user.role == 'admin'){
+        if(req.user.role == 'ADMIN'){
             //Solicitud para cargar imagen
             let data = req.body;
+            console.log(req.data);
+            console.log(req.files);
              //Guardar registro en la bd
-            var img_path = req.files.portada.path;
-            var name = img_path.split('\\');
-            var portada_name = name[2];
+            // var img_path = req.files.portada.path;
+            // var name = img_path.split('\\');
+            // var portada_name = name[2];
 
-            data.slug = data.titulo.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,''); 
-            data.portada = portada_name;
-            let reg = await Producto.create(data);
+            // data.slug = data.titulo.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,''); 
+            // data.portada = portada_name;
+            // let reg = await Producto.create(data);
 
-            //Registro de inventario automatico
-            let inventario = await Inventario.create({
-                admin: req.user.sub,
-                cantidad: data.stock,
-                proveedor: data.proveedor,
-                producto: reg._id
-            });
+            // //Registro de inventario automatico
+            // let inventario = await Inventario.create({
+            //     admin: req.user.sub,
+            //     cantidad: data.stock,
+            //     proveedor: data.proveedor,
+            //     producto: reg._id
+            // });
 
-            codigo: {type: String, required: true },
-            titulo: {type: String, required: true},
-            slug: {type: String, required: true},
-            descripcion: {type: String, required: true},
-            galeria: [{type: object, required: false}],
-            precio_compra: {type: Number, required: true},
-            precio_venta: {type: Number, required: true},
-            stock: {type: Number, required: true},
-            nventas: {type: Number, default:0, required: true},
-            npuntos: {type: Number, default:0, required: true},
-            estado: {type: String, default: 'Edicion', required: true},
-            fecha_vencimiento: {type: String, required: true},
-            idcategoria: {type: Schema.ObjectId, ref: 'categoria'},
-            idmarca: {type: Schema.ObjectId, ref: 'marca'},
+            // codigo: {type: String, required: true },
+            // titulo: {type: String, required: true},
+            // slug: {type: String, required: true},
+            // descripcion: {type: String, required: true},
+            // galeria: [{type: object, required: false}],
+            // precio_compra: {type: Number, required: true},
+            // precio_venta: {type: Number, required: true},
+            // stock: {type: Number, required: true},
+            // nventas: {type: Number, default:0, required: true},
+            // npuntos: {type: Number, default:0, required: true},
+            // estado: {type: String, default: 'Edicion', required: true},
+            // fecha_vencimiento: {type: String, required: true},
+            // idcategoria: {type: Schema.ObjectId, ref: 'categoria'},
+            // idmarca: {type: Schema.ObjectId, ref: 'marca'},
 
-            res.status(200).send({data:reg, inventario:inventario});
+            // res.status(200).send({data:reg, inventario:inventario});
         }else{
             res.status(500).send({message: 'No tienes acceso'});
         }

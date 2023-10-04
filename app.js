@@ -20,6 +20,7 @@ var proveedor_route = require('./routes/proveedor');
 var categoria_route = require('./routes/categoria');
 var cupon_route = require('./routes/cupon');
 var marca_route = require('./routes/marca');
+var producto_route = require('./routes/producto');
 
 //conexion a base de datos
 const databese = module.exports = () =>{
@@ -62,6 +63,7 @@ app.use('/api',proveedor_route);
 app.use('/api',categoria_route);
 app.use('/api',cupon_route);
 app.use('/api',marca_route);
+app.use('/api',producto_route);
 
 databese();
 
