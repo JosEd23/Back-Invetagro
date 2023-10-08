@@ -13,6 +13,7 @@ var InventarioSchema = Schema({
     admin: {type: Schema.ObjectId, ref: 'ADMIN', require: true},
     proveedor: {type: Schema.ObjectId, ref: 'proveedor', require: true},
     fecha: {type: String, require: true},
+    fecha_exp: {type: String, require:true},
     createdAt:{type:Date, default: Date.now, require:true}
 });
 

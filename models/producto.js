@@ -20,8 +20,8 @@ var ProductoSchema = Schema({
     npuntos: {type: Number, default:0, required: true},
     estado: {type: String, default: 'Edicion', required: true},
     fecha_vencimiento: {type: String, default:0, required: true},
-    idcategoria: {type: Schema.ObjectId, ref: 'categorias'},
-    idmarca: {type: Schema.ObjectId, ref: 'marcas'},
+    idcategoria: {type: Schema.ObjectId, ref: 'categoria'},
+    idmarca: {type: Schema.ObjectId, ref: 'marca'},
 });
 
 module.exports = mongoose.model('producto',ProductoSchema);

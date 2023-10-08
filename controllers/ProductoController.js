@@ -62,8 +62,8 @@ const listar_productos_admin = async function (req, res) {
 
             // Utiliza populate para obtener los datos de categoría y marca
             let reg = await Producto.find({ titulo: new RegExp(filtro, 'i') })
-                // .populate('idcategoria', 'titulo')
-                // .populate('idmarca', 'titulo');
+                .populate('idcategoria')
+                .populate('idmarca');
 
             res.status(200).send({ data: reg });
 
