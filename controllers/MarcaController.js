@@ -1,4 +1,5 @@
 var marca = require ('../models/marca');
+var producto = require ('../models/producto');
 
 //Registro de marca
 const registro_marca_admin = async function (req, res){
@@ -90,34 +91,34 @@ const actualizar_marca_admin = async function(req, res){
 }
 
 
-//Eliminar marca
-const eliminar_marca_admin = async function(req, res){
-    if(req.user){
-        if(req.user.rol == 'ADMIN'){
-
-            var id = req.params['id']
-
-            // // Primero, verifica si la marca está asignada a algún producto
-            // const marcaAsignada = await producto.findOne({ marca: id });
-
-            // if (marcaAsignada) {
-            //     // Si la marca está asignada a un producto, no la elimines y devuelve un mensaje de error
-            //     res.status(400).send({ message: 'La marca está asignada a un producto y no puede eliminarse.' });
-            // } else {
-            //     // Si la marca no está asignada a ningún producto, elimínala
-            // }
-            let reg=await marca.findByIdAndRemove({_id:id});
-            res.status(200).send({data:reg});
-            
-           
-        }else{
-            res.status(500).send({message:'No access'});
+const eliminar_marca_admin = async function(req, res) {
+    if (req.user && req.user.rol === 'ADMIN') {
+      var id = req.params['id'];
+  
+      try {
+        // Verificar si el departamento está siendo referenciado en la colección de Empleado
+        const marcaProducto = await producto.findOne({ idmarca: id });
+  
+        if (marcaProducto) {
+          res.status(400).send({ message: 'La Marca esta siendo utilizada en la coleccion de productos. No se puede eliminar.' });
+        } else {
+          // Si el departamento no está siendo utilizado, eliminarlo
+          let reg = await marca.findByIdAndRemove({ _id: id });
+  
+          if (reg) {
+            res.status(200).send({ data: reg });
+          } else {
+            res.status(404).send({ message: 'Marca no encontrado.' });
+          }
         }
-    }else{
-        res.status(500).send({message:'No access'});
-    }
-}
-
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: 'Error al eliminar marca.' });
+      }
+    } else {
+      res.status(403).send({ message: 'No tiene acceso para eliminar la marca.' });
+    }
+  };
 
 
 module.exports = {

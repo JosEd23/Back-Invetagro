@@ -10,8 +10,8 @@ var InventarioSchema = Schema({
     cantidad: {type: Number, require:true },
     tipo_documento: {type: String, require:false },
     no_documento: {type: String, require:false },
-    admin: {type: Schema.ObjectId, ref: 'ADMIN', require: true},
-    proveedor: {type: Schema.ObjectId, ref: 'proveedor', require: true},
+    admin: {type: Schema.ObjectId, ref: 'ADMIN'},
+    idproveedor: {type: Schema.ObjectId, ref: 'proveedor', require: true},
     fecha: {type: String, require: true},
     fecha_exp: {type: String, require:true},
     createdAt:{type:Date, default: Date.now, require:true}

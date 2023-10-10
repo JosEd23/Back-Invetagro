@@ -1,4 +1,5 @@
 var categoria = require('../models/categoria');
+var producto = require('../models/producto');
 
 //Registro de categoria
 const registro_categoria_admin = async function(req, res){
@@ -90,25 +91,53 @@ const actualizar_categoria_admin = async function(req, res){
     }
 }
 
+const eliminar_categoria_admin = async function(req, res) {
+    if (req.user && req.user.rol === 'ADMIN') {
+      var id = req.params['id'];
+  
+      try {
+        // Verificar si la categoria esta siendo utlizada en productos
+        const categoriaProducto = await producto.findOne({ idcategoria: id });
+  
+        if (categoriaProducto) {
+          res.status(400).send({ message: 'La Categoria esta siendo utilizada en la coleccion de productos. No se puede eliminar.' });
+        } else {
+          // Si la categoria no está siendo utilizado, eliminarlo
+          let reg = await categoria.findByIdAndRemove({ _id: id });
+  
+          if (reg) {
+            res.status(200).send({ data: reg });
+          } else {
+            res.status(404).send({ message: 'Categoria no encontrada.' });
+          }
+        }
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: 'Error al eliminar categoria.' });
+      }
+    } else {
+      res.status(403).send({ message: 'No tiene acceso para eliminar la categoria.' });
+    }
+  };
 
 //Eliminar categorias
-const eliminar_categoria_admin = async function(req, res){
-    if(req.user){
-        if(req.user.rol == 'ADMIN'){
+// const eliminar_categoria_admin = async function(req, res){
+//     if(req.user){
+//         if(req.user.rol == 'ADMIN'){
 
-            var id = req.params['id']
+//             var id = req.params['id']
 
-            let reg=await categoria.findByIdAndRemove({_id:id});
-            res.status(200).send({data:reg});
+//             let reg=await categoria.findByIdAndRemove({_id:id});
+//             res.status(200).send({data:reg});
             
            
-        }else{
-            res.status(500).send({message:'No access'});
-        }
-    }else{
-        res.status(500).send({message:'No access'});
-    }
-}
+//         }else{
+//             res.status(500).send({message:'No access'});
+//         }
+//     }else{
+//         res.status(500).send({message:'No access'});
+//     }
+// }
 
 module.exports = {
     registro_categoria_admin,
