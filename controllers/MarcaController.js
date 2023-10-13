@@ -96,13 +96,13 @@ const eliminar_marca_admin = async function(req, res) {
       var id = req.params['id'];
   
       try {
-        // Verificar si el departamento está siendo referenciado en la colección de Empleado
+        // Verifica si la marca no esta siendo utilizada por algun producto
         const marcaProducto = await producto.findOne({ idmarca: id });
   
         if (marcaProducto) {
           res.status(400).send({ message: 'La Marca esta siendo utilizada en la coleccion de productos. No se puede eliminar.' });
         } else {
-          // Si el departamento no está siendo utilizado, eliminarlo
+          // Si la marca no esta siendo utilizada, eliminarla
           let reg = await marca.findByIdAndRemove({ _id: id });
   
           if (reg) {

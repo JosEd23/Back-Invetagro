@@ -102,7 +102,7 @@ const eliminar_categoria_admin = async function(req, res) {
         if (categoriaProducto) {
           res.status(400).send({ message: 'La Categoria esta siendo utilizada en la coleccion de productos. No se puede eliminar.' });
         } else {
-          // Si la categoria no está siendo utilizado, eliminarlo
+          // Si la categoria no está siendo utilizada, eliminarlo
           let reg = await categoria.findByIdAndRemove({ _id: id });
   
           if (reg) {
@@ -120,24 +120,6 @@ const eliminar_categoria_admin = async function(req, res) {
     }
   };
 
-//Eliminar categorias
-// const eliminar_categoria_admin = async function(req, res){
-//     if(req.user){
-//         if(req.user.rol == 'ADMIN'){
-
-//             var id = req.params['id']
-
-//             let reg=await categoria.findByIdAndRemove({_id:id});
-//             res.status(200).send({data:reg});
-            
-           
-//         }else{
-//             res.status(500).send({message:'No access'});
-//         }
-//     }else{
-//         res.status(500).send({message:'No access'});
-//     }
-// }
 
 module.exports = {
     registro_categoria_admin,

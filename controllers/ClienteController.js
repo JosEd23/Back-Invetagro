@@ -58,10 +58,7 @@ const login_cliente =async function(req, res){
             }
         });
        // 
-
     }
-
-    
 }
 
 const listar_clientes_filtro_admin = async function(req, res) {
@@ -182,6 +179,63 @@ const eliminar_cliente_admin = async function(req, res){
     }
 }
 
+const obtener_cliente_guest = async function (req, res){
+    if(req.user){
+        var id = req.params['id'];
+            
+        try {
+            var reg = await Cliente.findById({_id:id});
+            res.status(200).send({data:reg});
+            
+        } catch (error) {
+            res.status(200).send({data:undefined});
+        }
+    }else{
+        res.status(500).send({message:'No access'});
+    }
+}
+
+const actualizar_perfil_cliente_guest = async function (req, res){
+    if(req.user){
+        var id = req.params['id'];
+        var data = req.body;
+
+        if(data.password){
+            // console.log('Con contrasenia');
+            bcrypt.hash(data.password,null,null, async function(err, hash){
+                var reg = await Cliente.findByIdAndUpdate({_id:id},{
+                    nombres: data.nombres,
+                    apellidos: data.apellidos,
+                    departamento:data.departamento,
+                    municipio: data.municipio,
+                    direccion : data.direccion,
+                    telefono : data.telefono,
+                    nacimiento : data.nacimiento,
+                    dpi : data.dpi,
+                    password: hash,
+                });
+                res.status(200).send({data:reg});
+            });
+            
+        }else{
+            // console.log('Sin contrasenia');
+            var reg = await Cliente.findByIdAndUpdate({_id:id},{
+                nombres: data.nombres,
+                apellidos: data.apellidos,
+                departamento:data.departamento,
+                municipio: data.municipio,
+                direccion : data.direccion,
+                telefono : data.telefono,
+                nacimiento : data.nacimiento,
+                dpi : data.dpi,
+            });
+            res.status(200).send({data:reg});
+        }
+
+    }else{
+        res.status(500).send({message:'No access'});
+    }
+}
 
 module.exports = {
     registro_cliete,
@@ -190,5 +244,7 @@ module.exports = {
     registro_cliente_admin,
     obtener_cliente_admin,
     actualizar_cliente_admin,
-    eliminar_cliente_admin
+    eliminar_cliente_admin,
+    obtener_cliente_guest,
+    actualizar_perfil_cliente_guest
 }

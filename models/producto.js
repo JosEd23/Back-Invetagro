@@ -18,6 +18,8 @@ var ProductoSchema = Schema({
     stock: {type: Number, default:0, required: true},
     nventas: {type: Number, default:0, required: true},
     npuntos: {type: Number, default:0, required: true},
+    variedades: [{type: Object, require:false}],
+    titulo_variedad: {type:String, require:false},
     estado: {type: String, default: 'Edicion', required: true},
     fecha_vencimiento: {type: String, default:0, required: true},
     idcategoria: {type: Schema.ObjectId, ref: 'categoria'},
