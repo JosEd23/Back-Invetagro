@@ -16,6 +16,9 @@ api.get('/obtener_producto_admin/:id', auth.auth,productoController.obtener_prod
 api.put('/actualizar_producto_admin/:id', [auth.auth,path], productoController.actualizar_producto_admin);
 api.delete('/eliminar_producto_admin/:id',auth.auth,productoController.eliminar_producto_admin);
 
+//APIS PUBLICAS
+api.get('/listar_productos_publico/:filtro?',productoController.listar_productos_publico);
+
 // api.get('/listar_productos_admin/:filtro?', auth.auth, productoController.listar_productos_admin);
 
 
