@@ -16,6 +16,6 @@ api.delete('/eliminar_categoria_admin/:id',auth.auth,CategoriaController.elimina
 
 //---APIS PUBLICAS
 api.get('/listar_categoria_publico/:filtro?',CategoriaController.listar_categoria_publico);
-
+api.get('/listar_productos_por_categoria/:filtroCategoria?',CategoriaController.listar_productos_por_categoria);
 module.exports = api
 

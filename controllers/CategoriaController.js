@@ -1,6 +1,8 @@
 var categoria = require('../models/categoria');
 var producto = require('../models/producto');
 
+const mongoose = require('mongoose');
+
 //Registro de categoria
 const registro_categoria_admin = async function (req, res) {
     if (req.user) {
@@ -124,6 +126,7 @@ const eliminar_categoria_admin = async function (req, res) {
 //Listar categorias
 const listar_categoria_publico = async function (req, res) {
     let filtro = req.params['filtro'];
+    
 
     if (filtro == null || filtro === 'null') {
         let reg = await categoria.find();
@@ -132,11 +135,50 @@ const listar_categoria_publico = async function (req, res) {
         // Filtro
         let reg = await categoria.find({
             $or: [
-                { nombres: new RegExp(filtro, 'i') },
+                { titulo: new RegExp(filtro, 'i') },
             ]
         });
         res.status(200).send({ data: reg });
     }
+}
+
+// const listar_productos_por_categoria = async function (req, res) {
+//     let filtroCategoria = req.params['filtroCategoria'];
+
+//     if (filtroCategoria == 'todos') {
+//         let reg = await producto.find();
+//         res.status(200).send({ data: reg });
+//     } else {
+//         let reg = await producto.find({
+//             idcategoria: filtroCategoria
+//         });
+//         res.status(200).send({ data: reg });
+//     }
+// }
+
+const listar_productos_por_categoria = async function (req, res) {
+    let filtroCategoria = req.params['filtroCategoria'];
+
+    if (filtroCategoria === 'todos') {
+        try {
+            let productos = await producto.find();
+            res.status(200).send({ data: productos });
+        } catch (error) {
+            res.status(500).send({ error: 'Error al obtener los productos.' });
+        }
+    } else {
+        try {
+            let productos = await producto.find({ idcategoria: filtroCategoria });
+
+            if (productos.length === 0) {
+                res.status(404).send({ error: 'No se encontraron productos para la categoría especificada.' });
+            } else {
+                res.status(200).send({ data: productos });
+            }
+        } catch (error) {
+            res.status(500).send({ error: 'Error al obtener los productos por categoría.' });
+        }
+    }
 }
 
 module.exports = {
@@ -145,5 +187,6 @@ module.exports = {
     obtener_categoria_admin,
     actualizar_categoria_admin,
     eliminar_categoria_admin,
-    listar_categoria_publico
+    listar_categoria_publico,
+    listar_productos_por_categoria
 }
