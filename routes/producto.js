@@ -18,7 +18,8 @@ api.delete('/eliminar_producto_admin/:id',auth.auth,productoController.eliminar_
 
 //APIS PUBLICAS
 api.get('/listar_productos_publico/:filtro?',productoController.listar_productos_publico);
-
+api.get('/obtener_productos_slug_publico/:slug', productoController.obtener_productos_slug_publico);
+api.get('/listar_productos_recomendados_publico/:idcategoria', productoController.listar_productos_recomendados_publico);
 // api.get('/listar_productos_admin/:filtro?', auth.auth, productoController.listar_productos_admin);
 
 

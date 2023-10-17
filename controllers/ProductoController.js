@@ -203,17 +203,43 @@ const eliminar_producto_admin = async function (req, res) {
   }
 };
 
-//----------------------------------------->Metodos Pubicos
+//----------------------------------------->Metodos Pubicos<---------------------
+
 const listar_productos_publico = async function (req, res) {
   var filtro = req.params['filtro'];
 
-  // Utiliza populate para obtener los datos de categoría y marca
-  let reg = await Producto.find({ titulo: new RegExp(filtro, 'i') })
-    .populate('idcategoria')
-    .populate('idmarca');
+  let reg = await Producto.find({ titulo: new RegExp(filtro, 'i')}).sort({createdAt:-1});
+    
 
   res.status(200).send({ data: reg });
 }
+
+const obtener_productos_slug_publico = async function (req, res) {
+  var slug = req.params['slug'];
+  let reg = await Producto.findOne({ slug: slug })
+
+  res.status(200).send({ data: reg });
+}
+
+
+const listar_productos_recomendados_publico = async function (req, res) {
+  try {
+    var idcategoria = req.params['idcategoria'];
+    let reg = await Producto.find({ idcategoria: idcategoria }).sort({ createdAt: -1 }).limit(8);
+    res.status(200).send({ data: reg });
+  } catch (error) {
+    // Manejo de errores
+    console.error("Ha ocurrido un error: ", error);
+    res.status(500).send({ error: "Ha ocurrido un error al obtener los productos recomendados." });
+  }
+};
+
+
+// const listar_productos_recomendados_publico = async function (req, res) {
+//   var idcategoria = req.params['idcategoria'];
+//   let reg = await Producto.find({ idcategoria : idcategoria }).sort({createdAt:-1}).limit(8);
+//   res.status(200).send({ data: reg });
+// }
 
 
 // //Metodo para listar productos de inventario
@@ -302,5 +328,7 @@ module.exports = {
   obtener_producto_admin,
   actualizar_producto_admin,
   eliminar_producto_admin,
-  listar_productos_publico
+  listar_productos_publico,
+  obtener_productos_slug_publico,
+  listar_productos_recomendados_publico
 }
