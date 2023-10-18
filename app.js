@@ -13,6 +13,25 @@ var mongoose = require('mongoose');
 
 var port = process.env.PORT || 4201;
 
+//Utilizando Socket.io
+var server = require('http').createServer(app);
+var io = require('socket.io')(server,{
+    cors: {origin : '*'}
+});
+//Inicializando socket
+io.on('connection',function(socket){
+    //Socket para eliminar
+    socket.on('delete-carrito',function(data){
+        io.emit('new-carrito',data);
+        // console.log(data);
+    });
+    //Socket para agregar
+    socket.on('add-carrito-add',function(data){
+        io.emit('new-carrito-add',data);
+        // console.log(data);
+    });
+});
+
 //Variable para rutas
 var cliente_route = require('./routes/cliente');
 var admin_route = require('./routes/admin');
@@ -21,6 +40,7 @@ var categoria_route = require('./routes/categoria');
 var cupon_route = require('./routes/cupon');
 var marca_route = require('./routes/marca');
 var producto_route = require('./routes/producto');
+var carrito_route = require('./routes/carrito');
 
 //conexion a base de datos
 const databese = module.exports = () =>{
@@ -48,7 +68,7 @@ const databese = module.exports = () =>{
 app.use(cors());
 
 
-app.listen(port, () =>{
+server.listen(port, () =>{
     console.log('server corriendo en el puerto '+ port);
 });
 
@@ -64,6 +84,7 @@ app.use('/api',categoria_route);
 app.use('/api',cupon_route);
 app.use('/api',marca_route);
 app.use('/api',producto_route);
+app.use('/api',carrito_route);
 
 databese();
 
