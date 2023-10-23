@@ -41,6 +41,7 @@ var cupon_route = require('./routes/cupon');
 var marca_route = require('./routes/marca');
 var producto_route = require('./routes/producto');
 var carrito_route = require('./routes/carrito');
+var venta_route = require('./routes/venta');
 
 //conexion a base de datos
 const databese = module.exports = () =>{
@@ -85,6 +86,7 @@ app.use('/api',cupon_route);
 app.use('/api',marca_route);
 app.use('/api',producto_route);
 app.use('/api',carrito_route);
+app.use('/api',venta_route);
 
 databese();
 

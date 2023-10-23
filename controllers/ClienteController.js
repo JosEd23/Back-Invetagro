@@ -2,6 +2,7 @@
 
 const cliente = require('../models/cliente');
 //variables
+var Direccion = require('../models/direccion');
 var Cliente = require('../models/cliente');
 var bcrypt = require('bcrypt-nodejs');
 var jwt =require('../helpers/jwt');
@@ -237,6 +238,36 @@ const actualizar_perfil_cliente_guest = async function (req, res){
     }
 }
 
+//------------------------------------>
+//Las direcciones
+const registro_direccion_cliente = async function(req, res){
+    if(req.user){
+       var data = req.body;
+       let reg = await Direccion.create(data);
+       res.status(200).send({data:reg});
+    }else{
+        res.status(500).send({message:'No access'});
+    }
+}
+
+//lISTAR DIRECCIONES
+
+const listar_direccion_cliente = async function(req, res){
+    if(req.user){
+      var id = req.params['id'];
+
+    let direcciones = await Direccion.find({cliente:id})
+    .populate('cliente');
+
+       res.status(200).send({data:direcciones});
+    }else{
+        res.status(500).send({message:'No access'});
+    }
+}
+
+
+
+
 module.exports = {
     registro_cliete,
     login_cliente,
@@ -246,5 +277,7 @@ module.exports = {
     actualizar_cliente_admin,
     eliminar_cliente_admin,
     obtener_cliente_guest,
-    actualizar_perfil_cliente_guest
+    actualizar_perfil_cliente_guest,
+    registro_direccion_cliente,
+    listar_direccion_cliente
 }
