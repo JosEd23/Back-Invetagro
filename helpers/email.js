@@ -2,8 +2,8 @@
 const nodemailer = require('nodemailer');
 
 const mail = {
-    user: 'sair.ayestas@gmail.com',
-    pass: 'nomh onrf heba ktva'
+    user: 'invetagroo@gmail.com',
+    pass: 'lgch zfmy skvx qdvu',
 }
 
 const transporter = nodemailer.createTransport({
@@ -15,8 +15,8 @@ const transporter = nodemailer.createTransport({
     },
     secure: false,
     auth: {
-      user: 'sair.ayestas@gmail.com',
-      pass: 'nomh onrf heba ktva'
+      user: 'invetagroo@gmail.com',
+      pass: 'lgch zfmy skvx qdvu'
     }
   });
   
@@ -24,7 +24,7 @@ const transporter = nodemailer.createTransport({
 
     try {
         await transporter.sendMail({
-            from: ["sair.ayestas@gmail.com"], // sender address
+            from: ["invetagroo@gmail.com"], // sender address
             to: correo, // list of receivers
             subject, // Subject line
             text: "Hello world?", // plain text body
@@ -220,7 +220,7 @@ const getTemplete = (nombres, apellidos, token)=>{
                         <tr>
                           <td>
                             
-                            <img src="https://i.imgur.com/84wqBi7.png" style="max-width:140px; display:block; margin:auto; padding-top:60px; padding-bottom:10px; ">
+                            <img src="https://i.imgur.com/UV2Ooco.png" style="max-width:140px; display:block; margin:auto; padding-top:60px; padding-bottom:10px; ">
                           </td>
                         </tr>
                       </table>
@@ -268,7 +268,7 @@ const getTemplete = (nombres, apellidos, token)=>{
                 <table cellspacing="0" cellpadding="0px" bgcolor="#1B1B1B" class="force-full-width">
                 <tr>
                   <td style="color: black; background-color: #1B1B1B; font-size: 14px; text-align:left; padding-left: 20px; ">
-                    <a style="opacity: 0.75 ; color: white;"> Enviado por el equipo de T Consulting S.A.
+                    <a style="opacity: 0.75 ; color: white;"> Enviado por el equipo de Invetagro Soluciones Agropecuarias
                   </td>
 
                   <td>
