@@ -234,92 +234,17 @@ const listar_productos_recomendados_publico = async function (req, res) {
   }
 };
 
+const listar_productos_nuevos_publico = async function (req, res) {
+  let reg = await Producto.find().sort({createdAt:-1}).limit(8);
+  res.status(200).send({ data: reg });
+}
 
-// const listar_productos_recomendados_publico = async function (req, res) {
-//   var idcategoria = req.params['idcategoria'];
-//   let reg = await Producto.find({ idcategoria : idcategoria }).sort({createdAt:-1}).limit(8);
-//   res.status(200).send({ data: reg });
-// }
-
-
-// //Metodo para listar productos de inventario
-// const listar_inventario_producto_admin = async function(req, res){
-//     if(req.user){
-//         if(req.user.role == 'admin'){
-
-//             var id= req.params['id'];
-
-//             var reg = await Inventario.find({producto: id}.populate('admin','proveedor'));
-//             res.stat(200).send({data: reg});
-
-//         }else{
-//          res.status(500).send({message:'Sin acceso'})
-//         }
-//      }else{
-//          res.status(500).send({message:'Sin acceso'})
-//      }
-
-// }
-
-// //Metodo para eliminar productos de inventario
-// const eliminar_inventario_producto_admin = async function(req, res){
-//     if(req.user){
-//         if(req.user.role == 'admin'){
-//             //Obtener id de inventario
-//             var id= req.params['id'];
-//             //Eliminar inventario
-//            let reg = await Inventario.findByIdAndRemove({_id:id});
-//             //Obtener el registro del producto
-//            let prod = await Producto.findById({_id:reg.producto});
-//             //Calcular el nuevo stock
-//            let nuevo_stock = parseInt(prod.stock) - parseInt(reg.cantidad);
-//             //Actualizacion del nuevo stock al producto
-//            let producto = await Producto.findByAndUpdate({_id:reg.producto},{
-//             stock: nuevo_stock
-//            })
-
-//            res.status(200).send({data:producto});
-
-//         }else{
-//          res.status(500).send({message:'Sin acceso'})
-//         }
-//      }else{
-//          res.status(500).send({message:'Sin acceso'})
-//      }
-// }
-
-// //Metodo para registrar inventario
-
-// const registro_inventario_producto_admin = async function(req, res){
-//     if(req.user){
-//         if(req.user.role == 'admin'){
-
-//             let data = req.body;
-
-//             let reg = await Inventario.create(data);
-//             //Obtener el registro del producto
-//             let prod = await Producto.findById({_id:reg.producto});
-//             //Calcular el nuevo stock
-//                                       //Stockactual   //Stock aumentar
-//             let nuevo_stock = parseInt(prod.stock) + parseInt(reg.cantidad);
-//             //Actualizacion del nuevo stock al producto
-//             let producto = await Producto.findByAndUpdate({_id:reg.producto},{
-//                 stock: nuevo_stock
-//             })
+const listar_productos_masvendidos_publico = async function (req, res) {
+  let reg = await Producto.find().sort({nventas:-1}).limit(8);
+  res.status(200).send({ data: reg });
+}
 
 
-//             res.status(200).send9({data:reg});
-
-
-
-//         }else{
-//          res.status(500).send({message:'Sin acceso'})
-//         }
-//      }else{
-//          res.status(500).send({message:'Sin acceso'})
-//      }
-
-// }
 
 module.exports = {
   registro_producto_admin,
@@ -330,5 +255,7 @@ module.exports = {
   eliminar_producto_admin,
   listar_productos_publico,
   obtener_productos_slug_publico,
-  listar_productos_recomendados_publico
+  listar_productos_recomendados_publico,
+  listar_productos_nuevos_publico,
+  listar_productos_masvendidos_publico
 }
