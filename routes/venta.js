@@ -8,7 +8,7 @@ var api = express.Router();
 var auth = require('../middlewares/authenticate');
 
 
-api.post('/registro_compra_cliente', auth.auth,VentaController.registro_compra_cliente);
+api.post('/registro_compra_cliente',auth.auth,VentaController.registro_compra_cliente);
 
 
 module.exports = api;

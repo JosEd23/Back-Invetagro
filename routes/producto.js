@@ -22,14 +22,5 @@ api.get('/obtener_productos_slug_publico/:slug', productoController.obtener_prod
 api.get('/listar_productos_recomendados_publico/:idcategoria', productoController.listar_productos_recomendados_publico);
 api.get('/listar_productos_nuevos_publico', productoController.listar_productos_nuevos_publico);
 api.get('/listar_productos_masvendidos_publico', productoController.listar_productos_masvendidos_publico);
-// api.get('/listar_productos_admin/:filtro?', auth.auth, productoController.listar_productos_admin);
-
-
-// api.delete('/eliminar_producto_admin/:id', auth.auth,productoController.eliminar_producto_admin);
-
-// //APIS para inventario
-// api.get('/listar_inventario_producto_admin/:id', auth.auth,productoController.listar_inventario_producto_admin);
-// api.delete('/eliminar_inventario_producto_admin/:id', auth.auth,productoController.eliminar_inventario_producto_admin);
-// api.post('/registro_inventario_producto_admin', auth.auth,productoController.registro_inventario_producto_admin);
 
 module.exports = api;
