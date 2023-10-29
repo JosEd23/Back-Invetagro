@@ -22,5 +22,9 @@ api.put('/actualizar_perfil_cliente_guest/:id', auth.auth, clienteController.act
 api.post('/registro_direccion_cliente/',auth.auth, clienteController.registro_direccion_cliente);
 api.get('/listar_direccion_cliente/:id', auth.auth, clienteController.listar_direccion_cliente);
 
+//Contacto
+api.post('/enviar_mensaje_contacto', clienteController.enviar_mensaje_contacto);
+
+
 
 module.exports = api;

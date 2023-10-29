@@ -4,6 +4,7 @@ const cliente = require('../models/cliente');
 //variables
 var Direccion = require('../models/direccion');
 var Cliente = require('../models/cliente');
+var Contacto = require('../models/contacto');
 var bcrypt = require('bcrypt-nodejs');
 var jwt =require('../helpers/jwt');
 
@@ -264,6 +265,18 @@ const listar_direccion_cliente = async function(req, res){
         res.status(500).send({message:'No access'});
     }
 }
+ 
+
+//------------------------------> CONTACTO
+const enviar_mensaje_contacto = async function(req, res){
+    let data = req.body;
+
+    data.estado = 'Abierto';
+
+    let reg = await Contacto.create(data);
+    res.status(200).send({data:reg});
+
+}
 
 
 
@@ -279,5 +292,7 @@ module.exports = {
     obtener_cliente_guest,
     actualizar_perfil_cliente_guest,
     registro_direccion_cliente,
-    listar_direccion_cliente
+    listar_direccion_cliente,
+    enviar_mensaje_contacto,
+   
 }

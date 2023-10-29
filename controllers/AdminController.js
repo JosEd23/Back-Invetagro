@@ -2,6 +2,7 @@
 
 //variables
 var Admin = require('../models/admin');
+var Contacto = require('../models/contacto');
 var bcrypt = require('bcrypt-nodejs');
 var jwt =require('../helpers/jwt');
 
@@ -56,10 +57,55 @@ const login_admin =async function(req, res){
 
 }
 
+//--------------LISTAR MENSAJES -----------------------
+const obtener_mensaje_admin = async function (req, res){
+    if(req.user){
+        if(req.user.rol == 'ADMIN'){
+
+            try {
+                
+                let reg = await Contacto.find().sort({createdAt:-1});
+                res.status(200).send({data:reg});
+                
+            } catch (error) {
+                res.status(200).send({data:undefined});
+            }
+        }else{
+            res.status(500).send({message:'Error en el servidor'});
+        }
+    }else{
+        res.status(500).send({message:'Error'});
+    }
+}
+
+const cerrar_mensaje_admin = async function (req, res){
+    if(req.user){
+        if(req.user.rol == 'ADMIN'){
+
+            try {
+
+                let id = req.params['id'];
+
+                let reg = await Contacto.findByIdAndUpdate({_id:id});
+                res.status(200).send({data:reg});
+                
+            } catch (error) {
+                res.status(200).send({data:undefined});
+            }
+        }else{
+            res.status(500).send({message:'Error en el servidor'});
+        }
+    }else{
+        res.status(500).send({message:'Error'});
+    }
+}
+
 
 
 
 module.exports = {
     registro_admin,
-    login_admin
+    login_admin,
+    obtener_mensaje_admin,
+    cerrar_mensaje_admin
 }
