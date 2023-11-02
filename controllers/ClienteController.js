@@ -3,6 +3,8 @@
 const cliente = require('../models/cliente');
 //variables
 var Direccion = require('../models/direccion');
+var Venta = require('../models/venta');
+var Detallventa = require('../models/detalleventa');
 var Cliente = require('../models/cliente');
 var Contacto = require('../models/contacto');
 var bcrypt = require('bcrypt-nodejs');
@@ -279,6 +281,24 @@ const enviar_mensaje_contacto = async function(req, res){
 }
 
 
+const obtener_detalles_ordenes_clientes = async function(req, res){
+    if(req.user){
+      var id = req.params['id'];
+
+    try {
+        let venta = await Venta.findById({_id:id}).populate('direccion');
+        let detalles = await Detallventa.findById({venta:id}).populate('idproducto');
+
+        res.status(200).send({data:venta,detalles:detalles});
+        
+    } catch (error) {
+        res.status(200).send({data:undefined});
+    }
+
+    }else{
+        res.status(500).send({message:'No access'});
+    }
+}
 
 
 module.exports = {
@@ -294,5 +314,6 @@ module.exports = {
     registro_direccion_cliente,
     listar_direccion_cliente,
     enviar_mensaje_contacto,
+    obtener_detalles_ordenes_clientes
    
 }

@@ -12,4 +12,7 @@ api.post('/login_admin',adminController.login_admin);
 api.get('/obtener_mensaje_admin',auth.auth, adminController.obtener_mensaje_admin);
 api.put('/cerrar_mensaje_admin', auth.auth, adminController.cerrar_mensaje_admin);
 
+
+api.get('/obtener_ventas_admin/:desde?/:hasta?', auth.auth, adminController.obtener_ventas_admin);
+
 module.exports = api;

@@ -24,6 +24,7 @@ api.get('/listar_direccion_cliente/:id', auth.auth, clienteController.listar_dir
 
 //Contacto
 api.post('/enviar_mensaje_contacto', clienteController.enviar_mensaje_contacto);
+api.get('/obtener_detalles_ordenes_clientes/:id', auth.auth, clienteController.obtener_detalles_ordenes_clientes);
 
 
 

@@ -1,6 +1,10 @@
 'use strict'
 
 //variables
+var Venta = require('../models/venta');
+var Detalleventa = require('../models/detalleventa');
+
+
 var Admin = require('../models/admin');
 var Contacto = require('../models/contacto');
 var bcrypt = require('bcrypt-nodejs');
@@ -101,11 +105,59 @@ const cerrar_mensaje_admin = async function (req, res){
 }
 
 
+//----------------------------> Ventas
+
+const obtener_ventas_admin = async function (req, res){
+    if(req.user){
+        if(req.user.rol == 'ADMIN'){
+
+            let ventas = [];
+           let desde = req.params['desde'];
+            let hasta = req.params['hasta'];
+
+            if(desde == 'undefined' && hasta == 'undefined'){
+                ventas = await Venta.find()
+                .populate('idcliente')
+                .populate('direccion').sort({createdAt:-1});
+                 res.status(200).send({data:ventas});
+
+                // console.log('No hay filtros')
+                }else{
+                // console.log('Si hay filtros')
+                let tt_desde = Date.parse(new Date(desde + 'T00:00:00'))/1000;
+                let tt_hasta = Date.parse(new Date(hasta + 'T00:00:00'))/1000;
+
+                // console.log(tt_desde + '-' + tt_hasta);
+                let tem_ventas = await Venta.find()
+                .populate('idcliente')
+                .populate('direccion').sort({createdAt:-1});
+                 res.status(200).send({data:ventas});
+
+                for(var item of tem_ventas){
+                    var tt_created = Date.parse(new Date(item.createdAt))/1000;
+                    if(tt_created >= tt_desde && tt_created <= tt_hasta){
+                        ventas.push(item);
+                    }
+                }
+                res.status(200).send({data:ventas});
+
+            }
+          
+          
+
+        }else{
+            res.status(500).send({message:'Error en el servidor'});
+        }
+    }else{
+        res.status(500).send({message:'Error'});
+    }
+}
 
 
 module.exports = {
     registro_admin,
     login_admin,
     obtener_mensaje_admin,
-    cerrar_mensaje_admin
+    cerrar_mensaje_admin,
+    obtener_ventas_admin
 }
