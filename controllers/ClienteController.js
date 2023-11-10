@@ -300,6 +300,28 @@ const obtener_detalles_ordenes_clientes = async function(req, res){
     }
 }
 
+// const obtener_ordenes_clientes = async function(req, res) {
+//     if (req.user) {
+//         try {
+//             var id = req.params['id'];
+//             let reg = await Venta.find({idcliente: id}).sort({createdAt: -1});
+
+//             if (reg.length >= 1) {
+//                 res.status(200).send({data: reg});
+//             } else if (reg.length == 0) {
+//                 res.status(200).send({data: undefined});
+//             }
+//         } catch (error) {
+//             // Manejar el error aquí
+//             console.error('Error: ', error);
+//             res.status(500).send({message: 'Error interno en el servidor'});
+//         }
+//     } else {
+//         res.status(500).send({message: 'No access'});
+//     }
+// }
+
+
 
 module.exports = {
     registro_cliete,
@@ -315,5 +337,5 @@ module.exports = {
     listar_direccion_cliente,
     enviar_mensaje_contacto,
     obtener_detalles_ordenes_clientes
-   
-}
+    // obtener_ordenes_clientes
+} 
