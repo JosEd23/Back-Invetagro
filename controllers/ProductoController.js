@@ -11,7 +11,7 @@ const registro_producto_admin = async function (req, res) {
     if (req.user.rol === "ADMIN") {
       const data = req.body;
       var img_path = req.files.portada.path;
-      var name = img_path.split("\\");
+      var name = img_path.split("/");
       var portada_name = name[2];
 
 
@@ -128,7 +128,7 @@ const actualizar_producto_admin = async function (req, res) {
 
       // Guardar la nueva foto
       var img_path = req.files.portada.path;
-      var name = img_path.split("\\");
+      var name = img_path.split("/");
       var portada_name = name[2];
       productoExistente.portada = portada_name;
     }
